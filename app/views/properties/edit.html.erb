@@ -1,0 +1,26 @@
+<h1>物件編集</h1>
+<%= form_with(model: @property, local: true) do |form| %>
+  <div>
+    <p><%= form.label :物件名 %></P>
+    <p><%= form.text_field :name %></P>
+  </div>
+  <div>
+    <p><%= form.label :賃料 %></P>
+    <p><%= form.number_field :rent %></P>
+  </div>
+  <div>
+    <p><%= form.label :住所 %></P>
+    <p><%= form.text_field :address %></P>
+  </div>
+  <div>
+    <p><%= form.label :築年数 %></P>
+    <p><%= form.number_field :age %></P>
+  </div>
+  <div>
+    <p><%= form.label :備考 %></P>
+    <p><%= form.text_area :note %></P>
+  </div>
+  <p><%= form.submit :更新する %></P>
+<% end %>
+<%= link_to "詳細", property_path(@property.id) %> | 
+<%= link_to "戻る", properties_path %>
