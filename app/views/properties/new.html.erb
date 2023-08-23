@@ -1,6 +1,15 @@
 <h1>物件登録</h1>
-<%= flash[:danger] %>
 <%= form_with(model: @property, local: true) do |form| %>
+  <% if @property.errors.any? %>
+    <div id="error_expanation">
+      <h2><%= @property.errors.count %>件のエラーがあります。</h2>
+      <ul>
+      <% @property.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div>
     <p><%= form.label :物件名 %></p>
     <p><%= form.text_field :name %></p>

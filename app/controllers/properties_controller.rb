@@ -15,7 +15,6 @@ class PropertiesController < ApplicationController
     else
       flash.now[:danger] = "新しい物件情報の登録に失敗しました"
       render :new
-      # redirect_to new_property_path, notice: "新しい物件情報の登録に失敗しました"
     end
   end
 
@@ -31,6 +30,12 @@ class PropertiesController < ApplicationController
   def update
     @property = Property.find(params[:id])
     if @property.update(rent_params)
+      # 更新の結果stationsテーブルに発生した空レコードを全て取得
+      stations = Station.where(line: "", station: "", minute: nil)
+      # 空レコードを全て削除
+      stations.each do |station|
+        station.destroy
+      end
       redirect_to properties_path, notice: "物件情報を更新しました！"
     else
       flash.now[:danger] = "物件情報の更新に失敗しました"
