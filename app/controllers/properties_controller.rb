@@ -5,6 +5,7 @@ class PropertiesController < ApplicationController
 
   def new
     @property = Property.new
+    2.times {@property.stations.build}
   end
 
   def create
@@ -14,6 +15,7 @@ class PropertiesController < ApplicationController
     else
       flash.now[:danger] = "新しい物件情報の登録に失敗しました"
       render :new
+      # redirect_to new_property_path, notice: "新しい物件情報の登録に失敗しました"
     end
   end
 
@@ -23,6 +25,7 @@ class PropertiesController < ApplicationController
 
   def edit
     @property = Property.find(params[:id])
+    @property.stations.build
   end
 
   def update
@@ -44,6 +47,6 @@ class PropertiesController < ApplicationController
   private
 
   def rent_params
-    params.require(:property).permit(:name, :rent, :address, :age, :note)
+    params.require(:property).permit(:name, :rent, :address, :age, :note, stations_attributes: [:line, :station, :minute, :_destroy, :id])
   end
 end
